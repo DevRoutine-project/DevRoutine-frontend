@@ -32,6 +32,10 @@ export default function DevRoutinePage() {
   // ⭐ 일정 저장 상태
   const [events, setEvents] = useState<Record<string, { title: string; color: string }[]>>({})
 
+  // ⭐ 오늘 일정 계산 (여기서!)
+  const todayKey = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`
+  const todayEvents = events[todayKey] || []
+
   // ⭐ 모달 상태
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [newTitle, setNewTitle] = useState("")
@@ -40,7 +44,6 @@ export default function DevRoutinePage() {
   // 캘린더 일정 & 업무 선택부분
   const [modalStep, setModalStep] = useState<"type" | "basic" | "todo">("type")
   const [eventType, setEventType] = useState<"basic" | "todo" | null>(null)
-
 
   // 날짜 포맷 키
   function dateKey(date: Date) {
@@ -58,7 +61,7 @@ export default function DevRoutinePage() {
   // 모달 열기
   const openModal = (date: Date) => {
     setSelectedDate(date)
-    setModalStep("type") 
+    setModalStep("type")
     setIsModalOpen(true)
   }
 
@@ -144,7 +147,7 @@ export default function DevRoutinePage() {
               <h1 className="mb-2 text-4xl font-bold text-foreground">
                 DevRoutine
               </h1>
-              <p className="text-muted-foreground">개발자 취준생을 위한 루틴 트래커</p>
+              <p className="text-muted-foreground">취준생들의 일정관리를 위한</p>
             </div>
             <div className="glass-card flex items-center gap-3 rounded-2xl px-4 py-2">
               <Flame className="h-5 w-5 text-destructive" />
@@ -257,9 +260,37 @@ export default function DevRoutinePage() {
 
           {/* ------------------ 사이드바 ------------------ */}
           <div className="space-y-4">
+            {/* 오늘 일정 */}
             <Card className="glass-card rounded-3xl border-0 p-5 shadow-lg">
               <div className="mb-4 flex items-center justify-between">
-                <h3 className="text-lg font-bold text-foreground">오늘의 루틴</h3>
+                <h3 className="text-lg font-bold text-foreground">오늘 일정</h3>
+              </div>
+
+              {todayEvents.length === 0 ? (
+                <p className="text-sm text-muted-foreground">오늘 일정이 없습니다.</p>
+              ) : (
+                <div className="space-y-2">
+                  {todayEvents.map((event, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between rounded-xl p-3 bg-accent/30"
+                    >
+                      <span className="text-sm font-medium">{event.title}</span>
+                      <div
+                        className="h-3 w-3 rounded-full"
+                        style={{ backgroundColor: event.color }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Card>
+
+
+            {/* 오늘의 업무리스트 */}
+            <Card className="glass-card rounded-3xl border-0 p-5 shadow-lg">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-lg font-bold text-foreground">오늘의 업무</h3>
                 <Button size="icon" variant="ghost" className="h-8 w-8 rounded-xl">
                   <Plus className="h-4 w-4" />
                 </Button>
@@ -297,25 +328,12 @@ export default function DevRoutinePage() {
               </div>
             </Card>
 
-            {/* 오늘의 한 줄 지식 */}
-            <Card className="glass-card rounded-3xl border-0 bg-gradient-to-br from-soft-pink/20 to-warm-yellow/20 p-5 shadow-lg">
-              <div className="flex items-start gap-3">
-                <div className="text-2xl">🧠</div>
-                <div>
-                  <h3 className="mb-2 text-sm font-bold text-foreground">오늘의 한 줄 지식</h3>
-                  <p className="text-sm leading-relaxed text-foreground/80">
-                    {knowledgeOfDay}
-                  </p>
-                </div>
-              </div>
-            </Card>
-
             {/* 메시지 */}
-            <Card className="glass-card rounded-3xl border-0 bg-gradient-to-br from-deep-blue/10 to-primary/10 p-5 shadow-lg">
+            <Card className="glass-card rounded-3xl border-0 p-5 shadow-lg">
               <div className="flex items-start gap-3">
                 <div className="text-2xl">💌</div>
                 <div>
-                  <h3 className="mb-2 text-sm font-bold text-foreground">나에게 온 메시지</h3>
+                  <h3 className="mb-2 text-sm font-bold text-foreground">응원 메시지</h3>
                   <p className="text-sm leading-relaxed text-foreground/80">
                     {motivationMessage}
                   </p>
