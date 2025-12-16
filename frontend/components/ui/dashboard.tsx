@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { TrendingUp, Clock, CheckCircle2, Target } from "lucide-react"
 
-export function DashboardView() {
+export default function DashboardView() {
   const stats = [
     { label: "완료한 태스크", value: "24", change: "+12%", icon: CheckCircle2, color: "text-success" },
     { label: "학습 시간", value: "18.5시간", change: "+8%", icon: Clock, color: "text-primary" },

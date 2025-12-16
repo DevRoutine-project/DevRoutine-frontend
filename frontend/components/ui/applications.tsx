@@ -26,7 +26,7 @@ interface Application {
   notes?: string
 }
 
-export function ApplicationsView() {
+export default function ApplicationsView() {
   const [applications, setApplications] = useState<Application[]>([
     {
       id: "1",
