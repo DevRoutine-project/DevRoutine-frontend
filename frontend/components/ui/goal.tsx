@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/common/button"
 import { Progress } from "@/components/ui/progress"
 import { Plus, Target, Calendar, TrendingUp } from "lucide-react"
 

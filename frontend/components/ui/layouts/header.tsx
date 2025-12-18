@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { LayoutGrid, Calendar, Briefcase, Target } from "lucide-react"
@@ -19,16 +20,15 @@ export default function Header() {
     <header className="border-b bg-white">
       <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex flex-col leading-tight">
-          <span className="text-2xl font-bold text-blue-600">
-            DevRoutine
-          </span>
-          <span className="text-sm text-muted-foreground">
+        <div className="flex flex-col items-start">
+          <Link href="/dashboard">
+            <Image src="/logo.png" alt="DevRoutine 로고" width={120} height={32} priority />
+          </Link>
+          <span className="pl-1 text-xs text-muted-foreground">
             취준생 일정 관리
           </span>
         </div>
 
-        {/* v0-style Nav */}
         <nav className="rounded-full bg-muted/50 px-1.5 py-1.5 flex gap-1">
           {menus.map((menu) => {
             const active = pathname.startsWith(menu.href)

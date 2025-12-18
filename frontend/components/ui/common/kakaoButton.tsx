@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function KakaoButton() {
   const K_REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
@@ -16,18 +16,21 @@ export default function KakaoButton() {
     window.location.href = kakaoURL;
   };
 
-
   return (
     <div
-      className="relative flex w-full flex-row items-center justify-center rounded-xl bg-[#FEE500] py-[12]"
       onClick={handleKakaoLogin}
+      className="
+        flex w-full items-center justify-center gap-2
+        rounded-lg bg-[#FEE500]
+        py-2.5 text-sm font-bold text-black
+        shadow-sm hover:brightness-95 transition
+      "
     >
       <Image
-        className="absolute top-[11px] left-3 size-6"
-        width={24}
-        height={24}
-        src="/kaka_icon.svg"
-        alt="카카오로 시작하기"
+        src="/kakao_logo.png"
+        alt="카카오"
+        width={18}
+        height={18}
       />
       카카오로 시작하기
     </div>
