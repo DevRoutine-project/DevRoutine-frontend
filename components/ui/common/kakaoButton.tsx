@@ -1,38 +1,19 @@
 "use client";
 
-import Image from "next/image";
+const KAKAO_REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY!;
+const REDIRECT_URI = "http://localhost:3000/auth/callback/kakao";
 
 export default function KakaoButton() {
-  const K_REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
-
-  const K_REDIRECT_URI =
-    process.env.NODE_ENV === "production"
-      ? "https://frontend-five-sepia-55.vercel.app/auth/callback/kakao"
-      : "http://localhost:3000/auth/callback/kakao";
-
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${K_REST_API_KEY}&redirect_uri=${K_REDIRECT_URI}&response_type=code`;
-
   const handleKakaoLogin = () => {
-    window.location.href = kakaoURL;
+    const kakaoAuthUrl =
+      `https://kauth.kakao.com/oauth/authorize` +
+      `?response_type=code` +
+      `&client_id=${KAKAO_REST_API_KEY}` +
+      `&redirect_uri=${REDIRECT_URI}`;
+
+    console.log("이동할 URL:", kakaoAuthUrl); // ✅
+    window.location.href = kakaoAuthUrl;
   };
 
-  return (
-    <div
-      onClick={handleKakaoLogin}
-      className="
-        flex w-full items-center justify-center gap-2
-        rounded-lg bg-[#FEE500]
-        py-2.5 text-sm font-bold text-black
-        shadow-sm hover:brightness-95 transition
-      "
-    >
-      <Image
-        src="/kakao_logo.png"
-        alt="카카오"
-        width={18}
-        height={18}
-      />
-      카카오로 시작하기
-    </div>
-  );
-} 
+  return <button onClick={handleKakaoLogin}>카카오로 시작하기</button>;
+}
